@@ -18,8 +18,8 @@ def append_to_dict(dick, letter):
 
 
 def invalid_input(word):
-    if word.isalpha() and len(word) == 5 and word in words:
-        return False
+    if word.isalpha():
+        return False if len(word) == 5 and word.lower() in words else True
     return True
 
 
@@ -49,30 +49,33 @@ def evaluate(word):
         print(i + " ", end="")
     print(STOP)
 
+    if word == answer:
+        print("Congrats, you guessed correctly!")
+        return True
+    return False
+
 
 if __name__ == '__main__':
-
-    guess = ""
-    num_guesses = 1
 
     with open('sgb-words.txt') as f:
         words = [word.rstrip('\n') for word in f]
 
     answer = words[randint(0, len(words) - 1)].upper()
+    guess = ""
+    num_guesses = 1
 
     while True:
         guess = input(str(num_guesses) + ") Guess the word: ")
         if invalid_input(guess):
-            print("invalid input")
+            print("Word not in list. Try again")
             continue
-        guess = guess.upper()
-        if guess == answer:
-            print("Congrats, you guessed correctly!")
-            break
         else:
+            guess = guess.upper()
+            answer = answer.upper()
             num_guesses += 1
-            evaluate(guess)
+            if evaluate(guess):
+                break
             if num_guesses > MAX_GUESSES:
                 print("Out of tries, game over!")
-                print("The word was " + answer.upper())
+                print("The word was " + answer)
                 break
