@@ -65,13 +65,11 @@ if __name__ == '__main__':
     num_guesses = 1
 
     while True:
-        guess = input(str(num_guesses) + ") Guess the word: ")
+        guess = input(str(num_guesses) + ") Guess the word: ").upper()
         if invalid_input(guess):
             print("Word not in list. Try again")
             continue
         else:
-            guess = guess.upper()
-            answer = answer.upper()
             num_guesses += 1
             if evaluate(guess):
                 break
